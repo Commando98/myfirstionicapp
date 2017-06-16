@@ -1,0 +1,61 @@
+<ion-header>
+  <ion-navbar>
+    <ion-title>Home</ion-title>
+  </ion-navbar>
+</ion-header>
+
+<ion-content padding>
+
+
+  <ion-list>
+    <ion-item>
+      <ion-label floating>Username</ion-label>
+      <ion-input type="text" [(ngModel)]="username"></ion-input>
+
+      <p>{{username}}</p>
+    </ion-item>
+
+    <ion-item>
+      <ion-label floating>Password</ion-label>
+      <ion-input type="password" [(ngModel)]="password"></ion-input>
+
+
+
+
+    </ion-item>
+
+
+    <ion-item *ngFor="let item of comment">
+      <p>{{item}}</p>
+      <!--<button ion-delete-button color="secondary">Delete</button>-->
+      <button danger (click)="removeItem()">Delete</button>
+
+    </ion-item>
+
+      <ion-item *ngFor="let item of students">
+        <ion-row>
+
+          <p class="para">{{item.name}}</p>
+          <p class="para">{{item.batch}}</p>
+          <p class="para">{{item.year}}</p>
+        </ion-row>
+    </ion-item>
+
+    <ion-input type="text" [(ngModel)]="student_name"></ion-input>
+
+    <ion-input type="text" [(ngModel)]="student_batch"></ion-input>
+
+    <ion-input type="text" [(ngModel)]="student_year"></ion-input>
+
+    <button ion-button (click)="addstudent()">Add Student</button>
+
+    <button ion-button (click)="gotosecondpage()">login</button>
+  </ion-list>
+
+  <ion-input type="text" [(ngModel)]="addcomments"></ion-input>
+
+  <button ion-button (click)="addcomment()">add comment</button>
+
+
+
+</ion-content>
