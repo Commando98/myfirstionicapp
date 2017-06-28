@@ -1,41 +1,57 @@
 import { Component } from '@angular/core';
 import { NavController } from 'ionic-angular';
-import {SecondPage} from "../second/second";
+import {DatafetchProvider} from "../../providers/datafetch/datafetch";
+import {RequestOptions, Headers, Http} from "@angular/http";
 
 @Component({
   selector: 'page-home',
   templateUrl: 'home.html'
 })
 export class HomePage {
-username:string;
-password:string;
-addcomments:string;
-comment:any=["anil","arpan","jayash"];
-student_name:string;
-student_batch:number;
-student_year:string;
-students:any=[{"name":"xyz","batch":"2015","year":"second"},{"name":"abc","batch":"2016","year":"first"},
-              {"name":"pqr","batch":"2014","year":"third"}];
-  constructor(public navCtrl: NavController) {
+  username: string;
+  fullname: string;
+  city: string;
+  password: string;
+  addcommentt: string;
+  allstudents: any;
+  students: any;
+  update: any;
 
+  constructor(public navCtrl: NavController, public ddtfth: DatafetchProvider, public http: Http) {
+    this.getdata();
   }
 
-  addcomment()
-  {
-    this.comment.push(this.addcomments);
-    this.addcomments="";
+  getdata() {
+    this.ddtfth.load().then((data) => {
+      this.students = data
+      this.allstudents = this.students.students;
+      console.log(this.allstudents)
+
+    })
   }
-  removeItem(){
-    this.comment.pop(this.addcomments);
+
+  setdata() {
+    this.update = {
+      fname: this.fullname,
+      name: this.username,
+      password: this.password,
+      fcity: this.city
+
+
     }
-  addstudent(){
-    this.students.push({"name":this.student_name,"batch":this.student_batch,"year":this.student_year});
-  }
+    console.log("data sending");
+    var headers = new Headers();
+    headers.append('content-type', 'application/json;charset=UTF-8');
+    headers.append('Access-Control-Allow-Origin', '*');
+    let options = new RequestOptions({headers: headers});
 
-  gotosecondpage()
-  {
-    if(this.username=="anil"&&this.password=="234598")
-    this.navCtrl.push(SecondPage,{"username":this.username});
-  }
+    this.http.post(' https://rmyfirshtapp.herokuapp.com/insert', JSON.stringify(this.update), options)
+      .map(res => res.json()).subscribe(data => {
+        console.log(data)
+      }, err => {
+        console.log("Error:");
+      }
+    )
 
+  }
 }

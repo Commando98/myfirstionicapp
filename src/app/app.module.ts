@@ -12,6 +12,8 @@ import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
 import {FirstpagePage} from "../pages/firstpage/firstpage";
 import {SecondPage} from "../pages/second/second";
+import { DatafetchProvider } from '../providers/datafetch/datafetch';
+import {HttpModule} from "@angular/http";
 
 @NgModule({
   declarations: [
@@ -25,6 +27,7 @@ import {SecondPage} from "../pages/second/second";
   ],
   imports: [
     BrowserModule,
+    HttpModule,
     IonicModule.forRoot(MyApp)
   ],
   bootstrap: [IonicApp],
@@ -40,7 +43,8 @@ import {SecondPage} from "../pages/second/second";
   providers: [
     StatusBar,
     SplashScreen,
-    {provide: ErrorHandler, useClass: IonicErrorHandler}
+    {provide: ErrorHandler, useClass: IonicErrorHandler},
+    DatafetchProvider
   ]
 })
 export class AppModule {}
